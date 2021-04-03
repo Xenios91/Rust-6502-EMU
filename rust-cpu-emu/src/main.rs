@@ -1,3 +1,6 @@
+mod cpu_module;
+
 fn main() {
-    println!("Hello, world!");
+    let cpu = cpu_module::cpu_builder::build_new_cpu();
+    println!("{}", cpu);
 }
