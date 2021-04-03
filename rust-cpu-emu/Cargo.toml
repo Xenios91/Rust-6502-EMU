@@ -1,0 +1,9 @@
+[package]
+name = "rust-cpu-emu"
+version = "0.1.0"
+authors = ["xenios <xenios91@protonmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
