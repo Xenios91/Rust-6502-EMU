@@ -9,4 +9,6 @@ fn main() {
     println!("{}", cpu.get_register_value('a'));
     cpu.set_stack_pointer(20);
     println!("{}", cpu.get_stack_pointer());
+    cpu.set_status_flag_value('c', true);
+    println!("{}", cpu.get_status_flag_value('c'));
 }
