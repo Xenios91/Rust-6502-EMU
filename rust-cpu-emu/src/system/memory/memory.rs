@@ -21,5 +21,9 @@ pub mod memory {
         pub fn reset(&mut self) {
             self.initialize();
         }
+
+        pub fn get_total_memory(&self) -> usize {
+            self.max_memory
+        }
     }
 }

@@ -1,8 +1,8 @@
 pub mod system {
-    use super::super::cpu_module::cpu_6502::CPU6502;
-    use super::super::cpu_module::cpu_builder::build_new_cpu;
-    use super::super::memory::memory::memory::Memory;
-    use super::super::memory::memory_builder::memory_builder::build_new_memory;
+    use crate::system::cpu_module::cpu_6502::CPU6502;
+    use crate::system::cpu_module::cpu_builder::build_new_cpu;
+    use crate::system::memory::memory::memory::Memory;
+    use crate::system::memory::memory_builder::memory_builder::build_new_memory;
 
     pub struct System {
         pub cpu: CPU6502,
