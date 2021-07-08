@@ -3,11 +3,11 @@ use crate::cpu_module::registers::registers::StatusFlag;
 use crate::cpu_module::registers::registers::StatusFlags;
 
 pub struct CPU6502 {
-    pc: u8,                    // program counter
-    sp: u16,                   // stack pointer
-    registers: Registers,      // registers
-    status_flags: StatusFlags, // cpu status flags
-    cpu_arch: String,
+    pub program_counter: u16,
+    pub stack_pointer: u16,
+    pub registers: Registers,
+    pub status_flags: StatusFlags,
+    pub cpu_arch: String,
 }
 
 impl std::fmt::Display for CPU6502 {
@@ -29,8 +29,8 @@ impl CPU6502 {
             n: StatusFlag::new('n', 64),
         };
         Self {
-            pc: 0,
-            sp: 0,
+            program_counter: 0,
+            stack_pointer: 0,
             registers: registers,
             status_flags: status_flags,
             cpu_arch: "6502".to_string(),
@@ -46,82 +46,13 @@ impl CPU6502 {
         }
     }
 
-    pub fn get_status_flag_value(&self, register: char) -> bool {
-        match register {
-            'c' => !self.status_flags.c.bitfield.is_zeroed(),
-            'z' => !self.status_flags.z.bitfield.is_zeroed(),
-            'i' => !self.status_flags.i.bitfield.is_zeroed(),
-            'd' => !self.status_flags.d.bitfield.is_zeroed(),
-            'b' => !self.status_flags.b.bitfield.is_zeroed(),
-            'v' => !self.status_flags.v.bitfield.is_zeroed(),
-            'n' => !self.status_flags.n.bitfield.is_zeroed(),
-            _ => panic!("Invalid status flag requested!"),
-        }
-    }
-
-    pub fn get_stack_pointer(&self) -> u16 {
-        self.sp
-    }
-
-    pub fn get_program_counter(&self) -> u8 {
-        self.pc
-    }
-
-    pub fn set_register_value(&mut self, register: char, value: u8) {
-        match register {
-            'a' => self.registers.a = value,
-            'x' => self.registers.x = value,
-            'y' => self.registers.y = value,
-            _ => panic!("Invalid register requested!"),
-        }
-    }
-
-    pub fn set_stack_pointer(&mut self, value: u16) {
-        self.sp = value;
-    }
-
-    pub fn set_program_counter(&mut self, value: u8) {
-        self.pc = value;
-    }
-
-    pub fn set_status_flag_value(&mut self, register: char, setflag: bool) {
-        match register {
-            'c' => self
-                .status_flags
-                .c
-                .bitfield
-                .flip_bit(setflag, self.status_flags.c.placeholder),
-            'z' => self
-                .status_flags
-                .z
-                .bitfield
-                .flip_bit(setflag, self.status_flags.z.placeholder),
-            'i' => self
-                .status_flags
-                .i
-                .bitfield
-                .flip_bit(setflag, self.status_flags.i.placeholder),
-            'd' => self
-                .status_flags
-                .d
-                .bitfield
-                .flip_bit(setflag, self.status_flags.d.placeholder),
-            'b' => self
-                .status_flags
-                .b
-                .bitfield
-                .flip_bit(setflag, self.status_flags.b.placeholder),
-            'v' => self
-                .status_flags
-                .v
-                .bitfield
-                .flip_bit(setflag, self.status_flags.v.placeholder),
-            'n' => self
-                .status_flags
-                .n
-                .bitfield
-                .flip_bit(setflag, self.status_flags.n.placeholder),
-            _ => panic!("Invalid status flag requested!"),
-        }
+    pub fn reset(&mut self) {
+        self.program_counter = 0xfffc;
+        self.stack_pointer = 0x100;
+        let registers_to_zero: [char; 3] = ['a', 'x', 'y'];
+        self.registers
+            .set_many_registers_value(&registers_to_zero, 0);
+        let flags_to_clear: [char; 7] = ['c', 'z', 'i', 'd', 'b', 'v', 'n'];
+        self.status_flags.clear_status_flags(&flags_to_clear);
     }
 }
