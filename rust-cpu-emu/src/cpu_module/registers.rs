@@ -7,6 +7,10 @@ pub mod registers {
     }
 
     impl Registers {
+        pub fn new() -> Self {
+            Registers { a: 0, x: 0, y: 0 }
+        }
+
         pub fn set_register_value(&mut self, register: char, value: u8) {
             match register {
                 'a' => self.a = value,
@@ -16,37 +20,18 @@ pub mod registers {
             }
         }
 
-        pub fn set_many_registers_value(&mut self, registers: &[char], value: u8) {
+        pub fn set_many_registers_value(&mut self, registers: &[char], register_value: u8) {
             for register in registers {
-                self.set_register_value(*register, value);
+                self.set_register_value(*register, register_value);
             }
         }
-    }
 
-    mod bitfield {
-        use std::fmt;
-
-        pub struct Bitfield {
-            pub field: u8,
-        }
-        impl fmt::Display for Bitfield {
-            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-                write!(f, "(Bitfield: {})", self.field)
-            }
-        }
-        impl Bitfield {
-            pub fn new() -> Self {
-                Self { field: 0b00000000 }
-            }
-            pub fn flip_bit(&mut self, setflag: bool, placeholder: u8) {
-                if setflag {
-                    self.field = placeholder;
-                } else {
-                    self.field = self.field ^ self.field;
-                }
-            }
-            pub fn is_zeroed(&self) -> bool {
-                self.field == 0
+        pub fn get_register_value(&self, register: char) -> u8 {
+            match register {
+                'a' => return self.a,
+                'x' => return self.x,
+                'y' => return self.y,
+                _ => panic!("Invalid register requested!"),
             }
         }
     }
@@ -54,7 +39,7 @@ pub mod registers {
     pub struct StatusFlag {
         pub name: char,
         pub placeholder: u8,
-        pub bitfield: bitfield::Bitfield,
+        pub bitfield: u8,
     }
 
     impl StatusFlag {
@@ -62,8 +47,20 @@ pub mod registers {
             Self {
                 name: name,
                 placeholder: placeholder,
-                bitfield: bitfield::Bitfield::new(),
+                bitfield: 0b00000000,
             }
+        }
+
+        pub fn set_status_flag(&mut self, setflag: bool) {
+            if setflag {
+                self.bitfield = self.placeholder;
+            } else {
+                self.bitfield = self.bitfield ^ self.bitfield;
+            }
+        }
+
+        pub fn is_zeroed(&self) -> bool {
+            self.bitfield == 0
         }
     }
 
@@ -78,40 +75,52 @@ pub mod registers {
     }
 
     impl StatusFlags {
-        pub fn set_status_flag_value(&mut self, flag: char, setflag: bool) {
-            match flag {
-                'c' => self.c.bitfield.flip_bit(setflag, self.c.placeholder),
-                'z' => self.z.bitfield.flip_bit(setflag, self.z.placeholder),
-                'i' => self.i.bitfield.flip_bit(setflag, self.i.placeholder),
-                'd' => self.d.bitfield.flip_bit(setflag, self.d.placeholder),
-                'b' => self.b.bitfield.flip_bit(setflag, self.b.placeholder),
-                'v' => self.v.bitfield.flip_bit(setflag, self.v.placeholder),
-                'n' => self.n.bitfield.flip_bit(setflag, self.n.placeholder),
+        pub fn new() -> Self {
+            StatusFlags {
+                c: StatusFlag::new('c', 1),
+                z: StatusFlag::new('z', 2),
+                i: StatusFlag::new('i', 4),
+                d: StatusFlag::new('d', 8),
+                b: StatusFlag::new('b', 16),
+                v: StatusFlag::new('v', 32),
+                n: StatusFlag::new('n', 64),
+            }
+        }
+
+        pub fn set_status_flag_value(&mut self, status_flag: char, setflag: bool) {
+            match status_flag {
+                'c' => self.c.set_status_flag(setflag),
+                'z' => self.z.set_status_flag(setflag),
+                'i' => self.i.set_status_flag(setflag),
+                'd' => self.d.set_status_flag(setflag),
+                'b' => self.b.set_status_flag(setflag),
+                'v' => self.v.set_status_flag(setflag),
+                'n' => self.n.set_status_flag(setflag),
                 _ => panic!("Invalid status flag requested!"),
             }
         }
 
-        pub fn clear_status_flags(&mut self, flags: &[char]) {
-            for flag in flags {
-                self.set_status_flag_value(*flag, false);
+        pub fn clear_status_flags(&mut self, status_flags: &[char]) {
+            for status_flag in status_flags {
+                self.set_status_flag_value(*status_flag, false);
             }
         }
 
-        pub fn set_status_flags_value(&mut self, flags: &[char], setflag: bool) {
-            for flag in flags {
-                self.set_status_flag_value(*flag, setflag);
+        pub fn set_status_flags_value(&mut self, status_flags: &[char], setflag: bool) {
+            for status_flag in status_flags {
+                self.set_status_flag_value(*status_flag, setflag);
             }
         }
 
-        pub fn get_status_flag_value(&self, register: char) -> bool {
-            match register {
-                'c' => !self.c.bitfield.is_zeroed(),
-                'z' => !self.z.bitfield.is_zeroed(),
-                'i' => !self.i.bitfield.is_zeroed(),
-                'd' => !self.d.bitfield.is_zeroed(),
-                'b' => !self.b.bitfield.is_zeroed(),
-                'v' => !self.v.bitfield.is_zeroed(),
-                'n' => !self.n.bitfield.is_zeroed(),
+        pub fn get_status_flag_value(&self, status_flag: char) -> bool {
+            match status_flag {
+                'c' => !self.c.is_zeroed(),
+                'z' => !self.z.is_zeroed(),
+                'i' => !self.i.is_zeroed(),
+                'd' => !self.d.is_zeroed(),
+                'b' => !self.b.is_zeroed(),
+                'v' => !self.v.is_zeroed(),
+                'n' => !self.n.is_zeroed(),
                 _ => panic!("Invalid status flag requested!"),
             }
         }

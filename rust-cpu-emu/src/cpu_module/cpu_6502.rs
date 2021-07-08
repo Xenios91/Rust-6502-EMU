@@ -1,5 +1,4 @@
 use crate::cpu_module::registers::registers::Registers;
-use crate::cpu_module::registers::registers::StatusFlag;
 use crate::cpu_module::registers::registers::StatusFlags;
 
 pub struct CPU6502 {
@@ -18,31 +17,12 @@ impl std::fmt::Display for CPU6502 {
 
 impl CPU6502 {
     pub fn new() -> Self {
-        let registers = Registers { a: 0, x: 0, y: 0 };
-        let status_flags = StatusFlags {
-            c: StatusFlag::new('c', 1),
-            z: StatusFlag::new('z', 2),
-            i: StatusFlag::new('i', 4),
-            d: StatusFlag::new('d', 8),
-            b: StatusFlag::new('b', 16),
-            v: StatusFlag::new('v', 32),
-            n: StatusFlag::new('n', 64),
-        };
         Self {
             program_counter: 0,
             stack_pointer: 0,
-            registers: registers,
-            status_flags: status_flags,
-            cpu_arch: "6502".to_string(),
-        }
-    }
-
-    pub fn get_register_value(&self, register: char) -> u8 {
-        match register {
-            'a' => return self.registers.a,
-            'x' => return self.registers.x,
-            'y' => return self.registers.y,
-            _ => panic!("Invalid register requested!"),
+            registers: Registers::new(),
+            status_flags: StatusFlags::new(),
+            cpu_arch: String::from("6502"),
         }
     }
 
