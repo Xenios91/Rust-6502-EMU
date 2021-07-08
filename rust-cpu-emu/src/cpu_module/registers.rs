@@ -97,7 +97,7 @@ pub mod registers {
             }
         }
 
-        pub fn set_many_status_flags(&mut self, flags: &[char], setflag: bool) {
+        pub fn set_status_flags_value(&mut self, flags: &[char], setflag: bool) {
             for flag in flags {
                 self.set_status_flag_value(*flag, setflag);
             }
