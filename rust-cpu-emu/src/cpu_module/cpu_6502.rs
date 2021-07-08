@@ -1,3 +1,4 @@
+use crate::cpu_module::status_flag::status_flag::StatusFlag;
 use std::fmt;
 
 struct Registers {
@@ -7,19 +8,19 @@ struct Registers {
 }
 
 struct StatusFlags {
-    c: bool,
-    z: bool,
-    i: bool,
-    d: bool,
-    b: bool,
-    v: bool,
-    n: bool,
+    c: StatusFlag,
+    z: StatusFlag,
+    i: StatusFlag,
+    d: StatusFlag,
+    b: StatusFlag,
+    v: StatusFlag,
+    n: StatusFlag,
 }
 
 pub struct CPU6502 {
     pc: u8,                    // program counter
-    sp: u16,                   //stack pointer
-    registers: Registers,      //registers
+    sp: u16,                   // stack pointer
+    registers: Registers,      // registers
     status_flags: StatusFlags, // cpu status flags
     cpu_arch: String,
 }
@@ -34,13 +35,13 @@ impl CPU6502 {
     pub fn new() -> Self {
         let registers = Registers { a: 0, x: 0, y: 0 };
         let status_flags = StatusFlags {
-            c: false,
-            z: false,
-            i: false,
-            d: false,
-            b: false,
-            v: false,
-            n: false,
+            c: StatusFlag::new('c', 1),
+            z: StatusFlag::new('z', 2),
+            i: StatusFlag::new('i', 4),
+            d: StatusFlag::new('d', 8),
+            b: StatusFlag::new('b', 16),
+            v: StatusFlag::new('v', 32),
+            n: StatusFlag::new('n', 64),
         };
         Self {
             pc: 0,
@@ -62,23 +63,23 @@ impl CPU6502 {
 
     pub fn get_status_flag_value(&self, register: char) -> bool {
         match register {
-            'c' => return self.status_flags.c,
-            'z' => return self.status_flags.z,
-            'i' => return self.status_flags.i,
-            'd' => return self.status_flags.d,
-            'b' => return self.status_flags.b,
-            'v' => return self.status_flags.v,
-            'n' => return self.status_flags.n,
+            'c' => !self.status_flags.c.bitfield.is_zeroed(),
+            'z' => !self.status_flags.z.bitfield.is_zeroed(),
+            'i' => !self.status_flags.i.bitfield.is_zeroed(),
+            'd' => !self.status_flags.d.bitfield.is_zeroed(),
+            'b' => !self.status_flags.b.bitfield.is_zeroed(),
+            'v' => !self.status_flags.v.bitfield.is_zeroed(),
+            'n' => !self.status_flags.n.bitfield.is_zeroed(),
             _ => panic!("Invalid status flag requested!"),
         }
     }
 
     pub fn get_stack_pointer(&self) -> u16 {
-        return self.sp;
+        self.sp
     }
 
     pub fn get_program_counter(&self) -> u8 {
-        return self.pc;
+        self.pc
     }
 
     pub fn set_register_value(&mut self, register: char, value: u8) {
@@ -98,15 +99,43 @@ impl CPU6502 {
         self.pc = value;
     }
 
-    pub fn set_status_flag_value(&mut self, register: char, value: bool) {
+    pub fn set_status_flag_value(&mut self, register: char, setflag: bool) {
         match register {
-            'c' => self.status_flags.c = value,
-            'z' => self.status_flags.z = value,
-            'i' => self.status_flags.i = value,
-            'd' => self.status_flags.d = value,
-            'b' => self.status_flags.b = value,
-            'v' => self.status_flags.v = value,
-            'n' => self.status_flags.n = value,
+            'c' => self
+                .status_flags
+                .c
+                .bitfield
+                .flip_bit(setflag, self.status_flags.c.placeholder),
+            'z' => self
+                .status_flags
+                .z
+                .bitfield
+                .flip_bit(setflag, self.status_flags.z.placeholder),
+            'i' => self
+                .status_flags
+                .i
+                .bitfield
+                .flip_bit(setflag, self.status_flags.i.placeholder),
+            'd' => self
+                .status_flags
+                .d
+                .bitfield
+                .flip_bit(setflag, self.status_flags.d.placeholder),
+            'b' => self
+                .status_flags
+                .b
+                .bitfield
+                .flip_bit(setflag, self.status_flags.b.placeholder),
+            'v' => self
+                .status_flags
+                .v
+                .bitfield
+                .flip_bit(setflag, self.status_flags.v.placeholder),
+            'n' => self
+                .status_flags
+                .n
+                .bitfield
+                .flip_bit(setflag, self.status_flags.n.placeholder),
             _ => panic!("Invalid status flag requested!"),
         }
     }
