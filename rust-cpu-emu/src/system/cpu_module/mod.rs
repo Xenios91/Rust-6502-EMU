@@ -1,3 +1,3 @@
 pub mod cpu_builder;
-mod cpu_6502;
+pub mod cpu_6502;
 mod registers;
