@@ -1,5 +1,11 @@
-pub mod status_flag {
+pub mod registers {
     use crate::cpu_module::bitfield::bitfield::Bitfield;
+
+    pub struct Registers {
+        pub a: u8,
+        pub x: u8,
+        pub y: u8,
+    }
 
     pub struct StatusFlag {
         pub name: char,
@@ -15,5 +21,15 @@ pub mod status_flag {
                 bitfield: Bitfield::new(),
             }
         }
+    }
+
+    pub struct StatusFlags {
+        pub c: StatusFlag,
+        pub z: StatusFlag,
+        pub i: StatusFlag,
+        pub d: StatusFlag,
+        pub b: StatusFlag,
+        pub v: StatusFlag,
+        pub n: StatusFlag,
     }
 }

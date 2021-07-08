@@ -1,21 +1,6 @@
-use crate::cpu_module::status_flag::status_flag::StatusFlag;
-use std::fmt;
-
-struct Registers {
-    a: u8,
-    x: u8,
-    y: u8,
-}
-
-struct StatusFlags {
-    c: StatusFlag,
-    z: StatusFlag,
-    i: StatusFlag,
-    d: StatusFlag,
-    b: StatusFlag,
-    v: StatusFlag,
-    n: StatusFlag,
-}
+use crate::cpu_module::registers::registers::Registers;
+use crate::cpu_module::registers::registers::StatusFlag;
+use crate::cpu_module::registers::registers::StatusFlags;
 
 pub struct CPU6502 {
     pc: u8,                    // program counter
@@ -25,8 +10,8 @@ pub struct CPU6502 {
     cpu_arch: String,
 }
 
-impl fmt::Display for CPU6502 {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for CPU6502 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "(CPU Type: {})", self.cpu_arch)
     }
 }
