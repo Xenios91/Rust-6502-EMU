@@ -1,8 +1,8 @@
 pub mod memory {
 
     pub struct Memory {
-        max_memory: usize,
-        data: [usize; 1024 * 64],
+        max_memory: u32,
+        data: [u8; 1024 * 64],
     }
 
     impl Memory {
@@ -22,8 +22,12 @@ pub mod memory {
             self.initialize();
         }
 
-        pub fn get_total_memory(&self) -> usize {
+        pub fn get_total_memory(&self) -> u32 {
             self.max_memory
+        }
+
+        pub fn retrieve_memory(&self, address: usize) -> u8 {
+            self.data[address]
         }
     }
 }

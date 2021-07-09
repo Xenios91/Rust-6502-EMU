@@ -1,5 +1,6 @@
-use super::super::cpu_module::registers::registers::Registers;
-use super::super::cpu_module::registers::registers::StatusFlags;
+use crate::system::cpu_module::registers::registers::Registers;
+use crate::system::cpu_module::registers::registers::StatusFlags;
+use crate::system::memory::memory::memory::Memory;
 
 pub struct CPU6502 {
     pub program_counter: u16,
@@ -34,5 +35,11 @@ impl CPU6502 {
             .set_many_registers_value(&registers_to_zero, 0);
         let flags_to_clear: [char; 7] = ['c', 'z', 'i', 'd', 'b', 'v', 'n'];
         self.status_flags.clear_status_flags(&flags_to_clear);
+    }
+
+    pub fn fetch(&mut self, memory: &Memory) -> u8 {
+        let instructions: u8 = memory.retrieve_memory(self.program_counter as usize);
+        self.program_counter = self.program_counter + 1;
+        instructions
     }
 }

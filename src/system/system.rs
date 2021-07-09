@@ -21,5 +21,12 @@ pub mod system {
             self.cpu.reset();
             self.memory.reset();
         }
+
+        pub fn execute(&mut self, cycles: u32) {
+            for i in 0..cycles {
+                let byte_instruction: u8 = self.cpu.fetch(&self.memory);
+                println!("Cycle: {} Instruction: {}", i, byte_instruction);
+            }
+        }
     }
 }

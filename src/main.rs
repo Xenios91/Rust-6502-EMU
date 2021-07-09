@@ -17,4 +17,5 @@ fn main() {
     println!("Program Counter: {}", system.cpu.program_counter);
     println!("Register a: {}", system.cpu.registers.a);
     println!("Total memory: {}", system.memory.get_total_memory());
+    system.execute(2);
 }
