@@ -29,5 +29,9 @@ pub mod memory {
         pub fn retrieve_memory(&self, address: usize) -> u8 {
             self.data[address]
         }
+
+        pub fn set_memory_value(&mut self, address: usize, memory_value: u8) {
+            self.data[address] = memory_value;
+        }
     }
 }
