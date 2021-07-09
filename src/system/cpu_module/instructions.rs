@@ -8,6 +8,10 @@ pub mod cpu_6502_instructions {
 
     fn run_lda_immediate(cpu: &mut CPU6502, memory: &Memory, cycles: &mut u32) {
         cpu.registers.a = fetch_byte(cpu, memory, cycles);
+        cpu.status_flags
+            .set_status_flag_value('z', cpu.registers.a == 0);
+        cpu.status_flags
+            .set_status_flag_value('n', cpu.registers.a & 0b10000000 > 0);
     }
 
     pub fn run_instruction(cpu: &mut CPU6502, memory: &Memory, instruction: u8, cycles: &mut u32) {
