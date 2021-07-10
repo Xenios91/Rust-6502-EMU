@@ -4,6 +4,7 @@ use crate::system::memory::memory::Memory;
 mod lda_opcodes {
     pub const LDA_IMMEDIATE: u8 = 0xA9;
     pub const LDA_ZERO_PAGE: u8 = 0xA5;
+    pub const LDA_ZERO_PAGE_X: u8 = 0xB5;
 }
 
 mod lda_instructions {
@@ -16,9 +17,18 @@ mod lda_instructions {
     }
 
     pub fn run_lda_zero_page(cpu: &mut CPU6502, memory: &Memory, cycles: &mut u32) {
-        let zero_page_address: usize = super::fetch_byte(cpu, memory, cycles) as usize;
-        cpu.registers.a = super::read_byte(memory, cycles, zero_page_address);
+        let zero_page_address: u8 = super::fetch_byte(cpu, memory, cycles);
+        cpu.registers.a = super::read_byte(memory, cycles, zero_page_address as usize);
         cpu.lda_set_status_flags();
+    }
+
+    pub fn run_lda_zero_page_x(cpu: &mut CPU6502, memory: &Memory, cycles: &mut u32) {
+        let mut zero_page_address: u8 = super::fetch_byte(cpu, memory, cycles);
+        zero_page_address += cpu.registers.x;
+        *cycles -= 1;
+        cpu.registers.a = super::read_byte(memory, cycles, zero_page_address as usize);
+        cpu.lda_set_status_flags();
+        *cycles -= 1;
     }
 }
 
@@ -26,6 +36,7 @@ pub fn run_instruction(cpu: &mut CPU6502, memory: &Memory, instruction: u8, cycl
     match instruction {
         lda_opcodes::LDA_IMMEDIATE => lda_instructions::run_lda_immediate(cpu, memory, cycles),
         lda_opcodes::LDA_ZERO_PAGE => lda_instructions::run_lda_zero_page(cpu, memory, cycles),
+        lda_opcodes::LDA_ZERO_PAGE_X => lda_instructions::run_lda_zero_page_x(cpu, memory, cycles),
         _ => panic!("Unknown instruction {}", instruction),
     }
 }
