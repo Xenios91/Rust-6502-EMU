@@ -1,5 +1,5 @@
-use crate::system::cpu_module::registers::registers::Registers;
-use crate::system::cpu_module::registers::registers::StatusFlags;
+use crate::system::cpu_module::registers::Registers;
+use crate::system::cpu_module::registers::StatusFlags;
 
 pub struct CPU6502 {
     pub program_counter: u16,

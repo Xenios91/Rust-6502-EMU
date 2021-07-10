@@ -1,3 +1,3 @@
 pub mod system;
-mod memory;
-mod cpu_module;
+pub mod memory;
+pub mod cpu_module;

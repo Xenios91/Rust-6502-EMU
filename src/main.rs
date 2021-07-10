@@ -1,5 +1,5 @@
 mod system;
-use system::system::system::System;
+use system::system::System;
 fn main() {
     let mut system: System = System::new();
 
