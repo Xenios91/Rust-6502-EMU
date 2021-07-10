@@ -35,4 +35,11 @@ impl CPU6502 {
         let flags_to_clear: [char; 7] = ['c', 'z', 'i', 'd', 'b', 'v', 'n'];
         self.status_flags.clear_status_flags(&flags_to_clear);
     }
+
+    pub fn lda_set_status_flags(&mut self) {
+        self.status_flags
+            .set_status_flag_value('z', self.registers.a == 0);
+        self.status_flags
+            .set_status_flag_value('n', self.registers.a & 0b10000000 > 0);
+    }
 }
