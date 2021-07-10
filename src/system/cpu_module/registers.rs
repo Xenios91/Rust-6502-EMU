@@ -80,8 +80,8 @@ impl StatusFlags {
             i: StatusFlag::new('i', 4),
             d: StatusFlag::new('d', 8),
             b: StatusFlag::new('b', 16),
-            v: StatusFlag::new('v', 32),
-            n: StatusFlag::new('n', 64),
+            v: StatusFlag::new('v', 64),
+            n: StatusFlag::new('n', 128),
         }
     }
 

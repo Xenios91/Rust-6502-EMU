@@ -3,7 +3,7 @@ use crate::system::cpu_module::registers::StatusFlags;
 
 pub struct CPU6502 {
     pub program_counter: u16,
-    pub stack_pointer: u16,
+    pub stack_pointer: u8,
     pub registers: Registers,
     pub status_flags: StatusFlags,
     pub cpu_arch: String,
@@ -28,7 +28,7 @@ impl CPU6502 {
 
     pub fn reset(&mut self) {
         self.program_counter = 0xfffc;
-        self.stack_pointer = 0x100;
+        self.stack_pointer = 0x10;
         let registers_to_zero: [char; 3] = ['a', 'x', 'y'];
         self.registers
             .set_many_registers_value(&registers_to_zero, 0);
