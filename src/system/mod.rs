@@ -1,3 +1,5 @@
 pub mod system;
 pub mod memory;
-pub mod cpu_module;
+pub mod cpu;
+pub mod bus;
+pub mod instructions;

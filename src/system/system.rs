@@ -1,5 +1,6 @@
-use crate::system::cpu_module::cpu_6502::CPU6502;
-use crate::system::cpu_module::instructions;
+use crate::system::bus::bus_operations::bus_read;
+use crate::system::cpu::cpu_6502::CPU6502;
+use crate::system::instructions::instructions;
 use crate::system::memory::memory::Memory;
 
 pub struct System {
@@ -26,8 +27,8 @@ impl System {
         let mut cycles = cpu_cycles;
         while cycles > 0 {
             let byte_instruction: u8 =
-                instructions::fetch_byte(&mut self.cpu, &self.memory, &mut cycles);
-            instructions::run_instruction(
+                bus_read::fetch_byte(&mut self.cpu, &self.memory, &mut cycles);
+            instructions::execute_instruction(
                 &mut self.cpu,
                 &self.memory,
                 byte_instruction,
