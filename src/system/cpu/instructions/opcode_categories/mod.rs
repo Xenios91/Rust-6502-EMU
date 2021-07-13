@@ -27,7 +27,7 @@ pub mod inx_instructions;
 pub mod iny_instructions;
 pub mod jmp_instructions;
 pub mod jsr_instructions;
-pub mod lda_instructions;
+pub mod lda;
 pub mod ldx_instructions;
 pub mod ldy_instructions;
 pub mod lsr_instructions;
