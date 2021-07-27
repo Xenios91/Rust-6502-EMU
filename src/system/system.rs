@@ -42,7 +42,7 @@ impl System {
     }
 
     fn exit_program(&self) {
-        println!("Register a: {}", self.cpu.registers.a);
+        println!("Register a: {}", self.cpu.registers.a); //print register A's value to test
         println!("TEST COMPLETE!... EXITING PROGRAM!");
         std::process::exit(0);
     }
