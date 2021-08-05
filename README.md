@@ -1,4 +1,4 @@
-# Rust-CPU-EMU
+# Rust-VM
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2d800cbab6bd4b5d971da93316ecb026)](https://app.codacy.com/gh/Xenios91/Rust-CPU-EMU?utm_source=github.com&utm_medium=referral&utm_content=Xenios91/Rust-CPU-EMU&utm_campaign=Badge_Grade_Settings)
 
