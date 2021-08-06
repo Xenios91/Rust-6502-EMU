@@ -1,6 +1,6 @@
 pub mod bus_output {
-    use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
-    use crate::virtual_machine::memory::virtual_memory::Memory;
+    use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
+    use crate::virtual_system::memory::virtual_memory::Memory;
 
     pub fn read_byte(memory: &Memory, address: usize) -> u8 {
         let byte: u8 = memory.retrieve_memory(address);
@@ -15,7 +15,7 @@ pub mod bus_output {
 }
 
 pub mod bus_input {
-    use crate::virtual_machine::memory::virtual_memory::Memory;
+    use crate::virtual_system::memory::virtual_memory::Memory;
 
     fn write_bytes(memory: &mut Memory, address: usize, memory_value: &[u8]) {
         for value in memory_value {

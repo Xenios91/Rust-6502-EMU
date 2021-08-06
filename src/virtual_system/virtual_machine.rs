@@ -1,7 +1,7 @@
-use crate::virtual_machine::bus::bus_operations::bus_output;
-use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
-use crate::virtual_machine::cpu::opcodes::vm_instructions;
-use crate::virtual_machine::memory::virtual_memory::Memory;
+use crate::virtual_system::bus::bus_operations::bus_output;
+use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
+use crate::virtual_system::cpu::opcodes::vm_instructions;
+use crate::virtual_system::memory::virtual_memory::Memory;
 
 pub struct VirtualMachine {
     pub cpu: CPU,
@@ -36,12 +36,12 @@ impl VirtualMachine {
             cycles -= 1;
 
             if cycles == 0 {
-                self.exit_program();
+                self.exit_vm();
             }
         }
     }
 
-    fn exit_program(&self) {
+    fn exit_vm(&self) {
         println!("Register a: {}", self.cpu.registers.a); //print register A's value to test
         println!("TEST COMPLETE!... EXITING PROGRAM!");
         std::process::exit(0);

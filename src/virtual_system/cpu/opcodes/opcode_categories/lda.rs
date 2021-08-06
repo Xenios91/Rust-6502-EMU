@@ -11,9 +11,9 @@ pub mod lda_opcode_cycles {
 }
 
 pub mod lda_instructions {
-    use crate::virtual_machine::bus::bus_operations::bus_output;
-    use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
-    use crate::virtual_machine::memory::virtual_memory::Memory;
+    use crate::virtual_system::bus::bus_operations::bus_output;
+    use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
+    use crate::virtual_system::memory::virtual_memory::Memory;
 
     pub fn lda_immediate(cpu: &mut CPU, memory: &Memory) {
         cpu.registers.a = bus_output::fetch_byte(cpu, memory);

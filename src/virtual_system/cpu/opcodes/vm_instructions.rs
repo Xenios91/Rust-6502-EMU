@@ -1,6 +1,6 @@
-use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
-use crate::virtual_machine::cpu::opcodes::opcode_categories::lda::*;
-use crate::virtual_machine::memory::virtual_memory::Memory;
+use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
+use crate::virtual_system::cpu::opcodes::opcode_categories::lda::*;
+use crate::virtual_system::memory::virtual_memory::Memory;
 
 pub fn get_instructions(opcode: u8) -> (fn(&mut CPU, &Memory), u8) {
     match opcode {
