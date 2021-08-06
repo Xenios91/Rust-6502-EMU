@@ -4,6 +4,11 @@
 
 [![Unit Test](https://github.com/Xenios91/Rust-CPU-EMU/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/Xenios91/Rust-CPU-EMU/actions/workflows/rust.yml)
 
+<<<<<<< HEAD
 Rust 6502 CPU Emulator
+=======
+A Rust 6502 CPU emulator
+
+>>>>>>> parent of 03a2f30... Update README.md
 
 This is a work in progress, it is also being used to better learn Rust.
