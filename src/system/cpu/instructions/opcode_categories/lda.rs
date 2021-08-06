@@ -13,7 +13,7 @@ pub mod lda_opcode_cycles {
 pub mod lda_instructions {
     use crate::system::bus::bus_operations::bus_read;
     use crate::system::cpu::cpu_6502::CPU6502;
-    use crate::system::memory::memory::Memory;
+    use crate::system::memory::virtual_memory::Memory;
 
     pub fn lda_immediate(cpu: &mut CPU6502, memory: &Memory) {
         cpu.registers.a = bus_read::fetch_byte(cpu, memory);

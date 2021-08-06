@@ -26,9 +26,9 @@ impl Registers {
 
     pub fn get_register_value(&self, register: char) -> u8 {
         match register {
-            'a' => return self.a,
-            'x' => return self.x,
-            'y' => return self.y,
+            'a' => self.a,
+            'x' => self.x,
+            'y' => self.y,
             _ => panic!("Invalid register requested!"),
         }
     }
@@ -43,8 +43,8 @@ pub struct StatusFlag {
 impl StatusFlag {
     pub fn new(name: char, placeholder: u8) -> Self {
         Self {
-            name: name,
-            placeholder: placeholder,
+            name,
+            placeholder,
             bitfield: 0b00000000,
         }
     }
@@ -53,7 +53,7 @@ impl StatusFlag {
         if setflag {
             self.bitfield = self.placeholder;
         } else {
-            self.bitfield = self.bitfield ^ self.bitfield;
+            self.bitfield ^= self.placeholder;
         }
     }
 

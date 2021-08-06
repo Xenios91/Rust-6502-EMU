@@ -1,6 +1,6 @@
 use crate::system::cpu::cpu_6502::CPU6502;
 use crate::system::cpu::instructions::opcode_categories::lda::*;
-use crate::system::memory::memory::Memory;
+use crate::system::memory::virtual_memory::Memory;
 
 pub fn get_instructions(opcode: u8) -> (fn(&mut CPU6502, &Memory), u8) {
     match opcode {

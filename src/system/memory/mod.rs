@@ -1,1 +1,1 @@
-pub mod memory;
+pub mod virtual_memory;

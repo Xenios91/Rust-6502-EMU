@@ -1,7 +1,7 @@
 mod system;
-use system::system::System;
+use system::virtual_machine::VirtualMachine;
 fn main() {
-    let mut system: System = System::new();
+    let mut system: VirtualMachine = VirtualMachine::new();
 
     system.load_program();
     system.execute();

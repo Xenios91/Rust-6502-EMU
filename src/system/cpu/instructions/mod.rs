@@ -1,2 +1,2 @@
-pub mod instructions;
+pub mod vm_instructions;
 mod opcode_categories;
