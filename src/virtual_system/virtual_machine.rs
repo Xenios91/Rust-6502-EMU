@@ -1,11 +1,11 @@
 use crate::virtual_system::bus::bus_operations::bus_output;
-use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
 use crate::virtual_system::cpu::opcodes::vm_instructions;
+use crate::virtual_system::cpu::virtual_cpu::cpu::CPU;
 use crate::virtual_system::memory::virtual_memory::Memory;
 
 pub struct VirtualMachine {
-    pub cpu: CPU,
-    pub memory: Memory,
+    cpu: CPU,
+    memory: Memory,
 }
 
 impl VirtualMachine {
@@ -48,7 +48,7 @@ impl VirtualMachine {
     }
 
     //test program
-    pub fn load_program(&mut self) {
+    pub fn load_program(&mut self, program_bytes: Vec<u8>) {
         self.memory.set_memory_value(0xfffc, 0xa5);
         self.memory.set_memory_value(0xfffd, 0x42);
         self.memory.set_memory_value(0x42, 84);

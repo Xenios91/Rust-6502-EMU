@@ -1,11 +1,11 @@
 use std::{
     env,
     fs::{self, File, Metadata},
+    io::Read,
     process::exit,
-    io::Read
 };
 
-pub fn run_cli_args() -> (&'static str, bool) {
+pub fn run_cli_args() -> (String, bool) {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
@@ -17,10 +17,10 @@ pub fn run_cli_args() -> (&'static str, bool) {
         if run_compiler(&args[2]) {
             print!("{} successfully compiled!", args[2]);
         }
-        ("", false)
+        (String::from(""), false)
     } else {
-        String::from(args[2].as_str());
-        ("", true)
+        let file_name = args[1].to_owned();
+        (file_name, true)
     }
 }
 
@@ -28,11 +28,13 @@ pub fn get_program(file_name: &str) -> Vec<u8> {
     let mut file: File = File::open(&file_name).expect("file not found!");
     let metadata: Metadata = fs::metadata(&file_name).expect("unable to read metadata");
     let mut buffer: Vec<u8> = vec![0; metadata.len() as usize];
-    file.read_exact(&mut buffer).expect("An error has occured reading the file");
+    file.read_exact(&mut buffer)
+        .expect("An error has occured reading the file");
     buffer
 }
 
 fn run_compiler(source_file: &str) -> bool {
     print!("Compiling {}...", source_file);
+    println!("Scuessfully compiled {}", source_file);
     true //test for now
 }
