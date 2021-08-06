@@ -1,5 +1,5 @@
-mod system;
-use system::virtual_machine::VirtualMachine;
+mod virtual_machine;
+use virtual_machine::virtual_machine::VirtualMachine;
 fn main() {
     let mut system: VirtualMachine = VirtualMachine::new();
 

@@ -1,8 +1,8 @@
-use crate::system::cpu::cpu_6502::CPU6502;
-use crate::system::cpu::instructions::opcode_categories::lda::*;
-use crate::system::memory::virtual_memory::Memory;
+use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
+use crate::virtual_machine::cpu::opcodes::opcode_categories::lda::*;
+use crate::virtual_machine::memory::virtual_memory::Memory;
 
-pub fn get_instructions(opcode: u8) -> (fn(&mut CPU6502, &Memory), u8) {
+pub fn get_instructions(opcode: u8) -> (fn(&mut CPU, &Memory), u8) {
     match opcode {
         lda_opcodes::LDA_IMMEDIATE => (
             lda_instructions::lda_immediate,

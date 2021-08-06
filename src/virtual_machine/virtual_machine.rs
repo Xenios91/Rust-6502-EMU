@@ -1,17 +1,17 @@
-use crate::system::bus::bus_operations::bus_read;
-use crate::system::cpu::cpu_6502::CPU6502;
-use crate::system::cpu::instructions::vm_instructions;
-use crate::system::memory::virtual_memory::Memory;
+use crate::virtual_machine::bus::bus_operations::bus_output;
+use crate::virtual_machine::cpu::virtual_cpu::cpu::CPU;
+use crate::virtual_machine::cpu::opcodes::vm_instructions;
+use crate::virtual_machine::memory::virtual_memory::Memory;
 
 pub struct VirtualMachine {
-    pub cpu: CPU6502,
+    pub cpu: CPU,
     pub memory: Memory,
 }
 
 impl VirtualMachine {
     pub fn new() -> Self {
         let mut system: VirtualMachine = VirtualMachine {
-            cpu: CPU6502::new(),
+            cpu: CPU::new(),
             memory: Memory::new(),
         };
         system.reset();
@@ -27,8 +27,8 @@ impl VirtualMachine {
         let mut cycles: u8 = 0;
         loop {
             if cycles == 0 {
-                let opcode: u8 = bus_read::fetch_byte(&mut self.cpu, &self.memory);
-                let instructions: (fn(&mut CPU6502, &Memory), u8) =
+                let opcode: u8 = bus_output::fetch_byte(&mut self.cpu, &self.memory);
+                let instructions: (fn(&mut CPU, &Memory), u8) =
                     vm_instructions::get_instructions(opcode);
                 cycles = instructions.1;
                 instructions.0(&mut self.cpu, &self.memory);
