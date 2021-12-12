@@ -4,7 +4,7 @@
 
 [![Unit Test](https://github.com/Xenios91/Rust-CPU-EMU/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/Xenios91/Rust-CPU-EMU/actions/workflows/rust.yml)
 
-What started off as a Rust CPU emulator for 6502, is probably going to turn into a VM for a new programming language just to tinker with.
+Rust CPU emulator for 6502
 
 
 This is a work in progress, it is also being used to better learn Rust.
